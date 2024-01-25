@@ -47,4 +47,26 @@ if ($result) {
     echo "window.location = 'form.php'; ";
     echo "</script>";
 }
+
+// Include the connection file
+include('connect.php');
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['fileupload'])) {
+    $file_name = $_FILES['fileupload']['name'];
+    $file_tmp = $_FILES['fileupload']['tmp_name'];
+    
+    // Check if file already exists
+    if (file_exists("fileupload/" . $file_name)) {
+        echo "Sorry, file already exists.";
+    } else {
+        // Move uploaded file to upload directory
+        move_uploaded_file($file_tmp, "fileupload/" . $file_name);
+
+        // Insert file details into database
+        $insert_query = "INSERT INTO uploadfile (fileupload) VALUES ('$file_name')";
+        mysqli_query($con, $insert_query);
+
+        echo "File uploaded successfully.";
+    }
+}
     ?>
