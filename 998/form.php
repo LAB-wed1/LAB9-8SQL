@@ -9,33 +9,27 @@
 // Include the connection file
 include('connect.php');
 include("snow.php");
-// Check if the form is submitted for file upload
+// Check if the form is submitted for file upload or delete
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check if the delete button is clicked
     if (isset($_POST['delete'])) {
-        $filenameToDelete = $_POST['delete'];
+        $filenameToDelete = $_POST['delete_filename'];
 
         // Construct the file path
         $filepath = 'fileupload/' . $filenameToDelete;
 
-        // Check if the file exists before attempting to delete
-        if (file_exists($filepath)) {
-            // Delete file from the server
-            unlink($filepath);
+        // Delete file from the server
+        unlink($filepath);
 
-            // Delete file record from the database
-            $deleteQuery = "DELETE FROM uploadfile WHERE fileupload = '$filenameToDelete'";
-            mysqli_query($con, $deleteQuery);
-        } else {
-            // Handle the case where the file does not exist
-            echo "File not found: $filenameToDelete";
-        }
+        // Delete file record from the database
+        $deleteQuery = "DELETE FROM uploadfile WHERE fileupload = '$filenameToDelete'";
+        mysqli_query($con, $deleteQuery);
+
+        // Refresh the page after deleting to update the file list
+        header("Location: {$_SERVER['PHP_SELF']}");
+        exit();
     }
-
-    // Refresh the page after deleting to update the file list
-    header("Location: {$_SERVER['PHP_SELF']}");
-    exit();
 }
+
 
 // Query data from the database
 $query = "SELECT * FROM uploadfile" or die("Error:" . mysqli_error($con));
@@ -52,17 +46,22 @@ $result = mysqli_query($con, $query);
             <td>Delete</td>
         </tr>
 
-        <!-- Display uploaded files -->
-        <?php
-        while ($row = mysqli_fetch_array($result)) {
-            echo "<tr>";
-            echo "<td>{$row['fileupload']}</td>";
-            echo "<td><img src='fileupload/{$row['fileupload']}' width='100'></td>";
-            echo "<td><button type='submit' name='delete' value='{$row['fileupload']}'>Delete</button></td>";
-            echo "</tr>";
-        }
-        
-        ?>
+       <!-- Display uploaded files -->
+<?php
+while ($row = mysqli_fetch_array($result)) {
+    echo "<tr>";
+    echo "<td>{$row['fileupload']}</td>";
+    echo "<td><img src='fileupload/{$row['fileupload']}' width='100'></td>";
+    echo "<td>";
+    echo "<form action='' method='post'>";
+    echo "<input type='hidden' name='delete_filename' value='{$row['fileupload']}'>";
+    echo "<button type='submit' name='delete' value='Delete'>Delete</button>";
+    echo "</form>";
+    echo "</td>";
+    echo "</tr>";
+}
+?>
+
     </table>
 </form>
 
