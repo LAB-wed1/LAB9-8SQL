@@ -47,4 +47,4 @@ if ($result) {
     echo "window.location = 'form.php'; ";
     echo "</script>";
 }
-?>
+    ?>
