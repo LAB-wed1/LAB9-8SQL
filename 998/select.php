@@ -1,6 +1,8 @@
 <html>
 <body>
 <?php
+
+include("snow.php");
  // 1) เชื่อมต่อเซิร์ฟเวอร์
 $con = mysqli_connect("localhost", "root", "");
 if(!$con) {

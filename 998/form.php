@@ -8,7 +8,7 @@
 <?php
 // Include the connection file
 include('connect.php');
-
+include("snow.php");
 // Check if the form is submitted for file upload
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if the delete button is clicked
