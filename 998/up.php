@@ -64,6 +64,24 @@
         #back-btn:hover {
             background-color: #0056b3;
         }
+        button[type="submit"] {
+    display: block;
+    width: 100%;
+    margin: 20px auto;
+    text-align: center;
+    padding: 10px;
+    background-color: #3498DB; /* เปลี่ยนสีพื้นหลัง */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #6495ED; /* เปลี่ยนสีเมื่อ hover */
+}
+
     </style>
 </head>
 <body>
