@@ -91,7 +91,8 @@
             echo "<tr>";
             echo "<td>" . $count . "</td>";
             echo "<td><a href='" . $file . "'>" . $file . "</a></td>";
-            echo "<td><button class='delete-btn' data-file='" . $file . "'>ลบ</button></td>";
+           echo "<td><button class='delete-btn' onclick='deleteFile(this)' data-file='" . $file . "'>ลบ</button></td>";
+
             echo "</tr>";
             $count++;
         }
@@ -105,36 +106,14 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var deleteButtons = document.querySelectorAll('.delete-btn');
-
-        deleteButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                var fileToDelete = this.getAttribute('data-file');
-                if (confirm('คุณต้องการลบไฟล์ ' + fileToDelete + ' หรือไม่?')) {
-                    // ส่งคำขอลบไฟล์ไปยังไฟล์ PHP
-                    fetch('delete_file.php?file=' + encodeURIComponent(fileToDelete))
-                        .then(response => {
-                            if (response.ok) {
-                                // ลบไฟล์สำเร็จ
-                                return response.text();
-                            }
-                            throw new Error('เกิดข้อผิดพลาดในการลบไฟล์');
-                        })
-                        .then(data => {
-                            alert(data); // แสดงข้อความจากไฟล์ PHP
-                            // รีโหลดหน้าเพื่ออัพเดทข้อมูล
-                            location.reload();
-                        })
-                        .catch(error => {
-                            console.error('เกิดข้อผิดพลาด:', error);
-                            alert('เกิดข้อผิดพลาดในการลบไฟล์');
-                        });
-                }
-            });
-        });
-    });
+    function deleteFile(button) {
+        var fileToDelete = button.getAttribute('data-file');
+        if (confirm('คุณต้องการลบไฟล์ ' + fileToDelete + ' หรือไม่?')) {
+            button.parentNode.parentNode.remove(); // ลบแถวที่มีปุ่มลบนี้ (โดยหากลับไปที่ Element tr แล้วลบ)
+        }
+    }
 </script>
+
 
 </body>
 </html>
