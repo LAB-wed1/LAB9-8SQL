@@ -28,12 +28,15 @@ echo "คิวรี่ข้อมูลสำเร็จ!!!<br /><br />";
 
 // 4) ใช้งานข้อมูล
 echo "<table border='1' cellspacing='0'>";
-echo "<tr><th>Book ID</th><th>Book Name</th><th>Action</th></tr>";
+echo "<tr><th>Book ID</th><th>Book Name</th><th>author</th><th>publisher</th><th>price</th><th>Action</th></tr>";
 
 while($row = mysqli_fetch_array($result)) {
     echo "<tr>";
     echo "<td>" . $row["book_id"] . "</td>";
     echo "<td>" . $row["book_name"] . "</td>";
+    echo "<td>" . $row["author"] . "</td>";
+    echo "<td>" . $row["publisher"] . "</td>";
+    echo "<td>" . $row["price"] . "</td>";
     echo "<td><a href='delete_book.php?id=" . $row["book_id"] . "'>Delete</a></td>";
     echo "</tr>";
 }
