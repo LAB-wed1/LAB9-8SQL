@@ -92,6 +92,8 @@ button[type="submit"]:hover {
     <form action="process.php" method="post">
         <ul>
             <?php
+
+            include("snow.php");
             // กำหนดโฟลเดอร์ที่ต้องการสแกนไฟล์
             $directory = "."; // เริ่มต้นที่โฟลเดอร์ปัจจุบัน
 

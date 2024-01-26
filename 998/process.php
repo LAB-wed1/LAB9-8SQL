@@ -80,6 +80,8 @@
 
 <div id="container">
     <?php
+
+    include("snow.php");
     if(isset($_POST['selected_files'])) {
         $selectedFiles = $_POST['selected_files'];
 
